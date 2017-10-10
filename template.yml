@@ -8,28 +8,6 @@ parameters:
   displayName: Application Name
   required: true
   value: report-frontend
-- name: GIT_SOURCE_URL
-  description: The source URL for the application
-  displayName: Source URL
-  required: true
-  value: https://github.com/adessoSchweiz/report-frontend
-- name: GIT_SOURCE_REF
-  description: The source Ref for the application
-  displayName: Source Ref
-  required: true
-  value: master
-- description: Github trigger secret.  A difficult to guess string encoded as part of the webhook URL.  Not encrypted.
-  displayName: GitHub Webhook Secret
-  from: '[a-zA-Z0-9]{40}'
-  generate: expression
-  name: GITHUB_WEBHOOK_SECRET
-  required: true
-- description: A secret string used to configure the Generic webhook.
-  displayName: Generic Webhook Secret
-  from: '[a-zA-Z0-9]{40}'
-  generate: expression
-  name: GENERIC_WEBHOOK_SECRET
-  required: true
 objects:
 - apiVersion: v1
   kind: ImageStream
@@ -46,21 +24,14 @@ objects:
     name: nginx
   spec:
     tags:
-    - annotations:
-        supports: nginx
-        tags: builder,nginx
-        version: "1.0"
+    - name: "1.0"
       from:
         kind: DockerImage
         name: tchughesiv/openshift-nginx
-      name: "1.0"
-    - annotations:
-        supports: nginx
-        tags: builder,nginx
+    - name: latest
       from:
         kind: ImageStreamTag
         name: "1.0"
-      name: latest
 - apiVersion: v1
   kind: ConfigMap
   metadata:
@@ -74,9 +45,6 @@ objects:
 - apiVersion: v1
   kind: BuildConfig
   metadata:
-    annotations:
-      pipeline.alpha.openshift.io/uses: '[{"name": "${NAME}", "namespace": "", "kind": "DeploymentConfig"}]'
-    creationTimestamp: null
     labels:
       name: ${APP_NAME}
     name: ${APP_NAME}
@@ -97,7 +65,7 @@ objects:
 
                 node {
                   stage("Checkout") {
-                    git url: "${GIT_SOURCE_URL}", branch: "${GIT_SOURCE_REF}"
+                    git url: "https://github.com/adessoSchweiz/${APP_NAME}", branch: "master"
                   }
                   stage("Build JSAR") {
                     def npmHome = tool 'NPM'
@@ -133,13 +101,6 @@ objects:
              throw err
           }
       type: JenkinsPipeline
-    triggers:
-    - github:
-        secret: "${GITHUB_WEBHOOK_SECRET}"
-      type: GitHub
-    - generic:
-        secret: "${GENERIC_WEBHOOK_SECRET}"
-      type: Generic
 - apiVersion: v1
   kind: BuildConfig
   metadata:
@@ -156,7 +117,7 @@ objects:
     runPolicy: Serial
     source:
       dockerfile: |-
-        FROM polymer:2.0
+        FROM nginx
         MAINTAINER Robert Brem <robert.brem@adesso.ch>
         USER root
         RUN yum install unzip -y
@@ -258,8 +219,6 @@ objects:
 - apiVersion: v1
   kind: Service
   metadata:
-    annotations:
-      openshift.io/generated-by: OpenShiftNewApp
     labels:
       app: ${APP_NAME}
     name: ${APP_NAME}
