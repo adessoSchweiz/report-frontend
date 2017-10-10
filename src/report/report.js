@@ -29,7 +29,7 @@ class Report extends Polymer.Element {
             .then(environment => {
                 return new Promise((resolve, reject) => {
                     let request = new XMLHttpRequest();
-                    request.open('GET', `http://${environment.host}:${environment.rest_port}/report-backend/resources/reports`, true);
+                    request.open('GET', `http://${environment.host}:${environment.rest_port}/resources/reports`, true);
                     request.setRequestHeader('Accept', 'application/json');
                     request.onreadystatechange = () => {
                         let raw = request.responseText;

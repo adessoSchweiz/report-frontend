@@ -1,4 +1,4 @@
 {
-  "host": "localhost",
+  "host": "localhost/report-backend",
   "rest_port": 9080
 }
