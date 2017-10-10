@@ -62,6 +62,16 @@ objects:
         name: "1.0"
       name: latest
 - apiVersion: v1
+  kind: ConfigMap
+  metadata:
+    name: report-frontend
+  data:
+    variables.json: |-
+      {
+        "host": "report-backend-myproject.18.194.72.196.nip.io",
+        "rest_port": 80
+      }
+- apiVersion: v1
   kind: BuildConfig
   metadata:
     annotations:
@@ -197,6 +207,9 @@ objects:
           ports:
           - containerPort: 8080
             protocol: TCP
+          volumeMounts:
+          - name: environment
+            mountPath: /usr/share/nginx/html/environment
           resources: {}
           terminationMessagePath: /dev/termination-log
           livenessProbe:
@@ -219,6 +232,13 @@ objects:
             periodSeconds: 10
             successThreshold: 1
             failureThreshold: 3
+        volumes:
+        - name: environment
+          configMap:
+            name: report-frontend
+            items:
+            - key: variables.json
+              path: variables.json
         dnsPolicy: ClusterFirst
         restartPolicy: Always
         securityContext: {}
