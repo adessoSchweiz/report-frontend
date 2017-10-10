@@ -4,11 +4,20 @@
 <dom-module id="teleport-report">
     <template>
         <div>reports:</div>
-        <template is="dom-repeat" items="{{reports}}">
-            <div># [[index]]</div>
-            <div>accepted routes: <span>[[item.acceptedRoutes]]</span></div>
-            <div>completed routes: <span>[[item.completedRoutes]]</span></div>
-        </template>
+        <table>
+            <thead>
+            <th>accepted routes</th>
+            <th>completed routes</th>
+            </thead>
+            <tbody>
+            <template is="dom-repeat" items="{{reports}}">
+                <tr>
+                    <td>[[item.acceptedRoutes]]</td>
+                    <td>[[item.completedRoutes]]</td>
+                </tr>
+            </template>
+            </tbody>
+        </table>
     </template>
     <script src="report.js"></script>
 </dom-module>
