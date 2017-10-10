@@ -1,4 +1,4 @@
 {
-  "host": "localhost",
-  "rest_port": 9080
+  "host": "http://report-backend-myproject.127.0.0.1.nip.io",
+  "rest_port": 80
 }
