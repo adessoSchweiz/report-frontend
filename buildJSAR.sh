@@ -19,6 +19,7 @@ mkdir target/environment
 cp environment-${STAGE}/variables.json target/environment/variables.json
 
 cp src/index.html target/index.html
+cp src/style.css target/style.css
 
 cd target
 zip -r jsar.zip .
