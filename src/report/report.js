@@ -4,18 +4,18 @@ class Report extends Polymer.Element {
         super();
         this.getReports()
             .then(reports => {
-                this.greetings = "Hello, it seems to work";
-                for (const report of reports) {
-                    this.greetings += `, ${report.acceptedRoutes} ${report.completedRoutes}`;
-                }
+                this.reports = reports;
+                console.log(`reports: ${this.reports}`)
             });
     }
 
     static get properties() {
         return {
-            message: {
-                type: String,
-                value: '--not set--'
+            employees: {
+                type: Array,
+                value() {
+                    return this.reports;
+                }
             }
         };
     }

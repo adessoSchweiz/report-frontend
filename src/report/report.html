@@ -1,12 +1,14 @@
 <link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../polymer/lib/elements/dom-repeat.html">
 <link rel="import" href="report-style.html">
 <dom-module id="teleport-report">
     <template>
-        <style include="teleport-report-style">
-        </style>
-        <slot></slot>
-        <div>{{greetings}}</div>
-        blub
+        <div>reports:</div>
+        <template is="dom-repeat" items="{{reports}}">
+            <div># [[index]]</div>
+            <div>accepted routes: <span>[[item.acceptedRoutes]]</span></div>
+            <div>completed routes: <span>[[item.completedRoutes]]</span></div>
+        </template>
     </template>
     <script src="report.js"></script>
 </dom-module>

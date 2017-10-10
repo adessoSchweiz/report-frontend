@@ -1,0 +1,36 @@
+:root {
+    --teleport-blue: lightblue;
+    --teleport-green: lightgreen;
+    --teleport-red: lightcoral;
+    --teleport-yellow: lightyellow;
+    --teleport-black: lightgrey;
+}
+
+section {
+    height: 97vh;
+    display: grid;
+    background-color: var(--teleport-black);
+    grid-template-columns: 1fr 5fr;
+    grid-auto-rows: 1fr 6fr 1fr;
+    grid-template-areas: "header header" "nav main" "footer footer";
+}
+
+header {
+    grid-area: header;
+    background-color: var(--teleport-blue);
+}
+
+nav {
+    grid-area: nav;
+    background-color: var(--teleport-green);
+}
+
+main {
+    grid-area: main;
+    background-color: var(--teleport-red);
+}
+
+footer {
+    grid-area: footer;
+    background-color: var(--teleport-yellow);
+}

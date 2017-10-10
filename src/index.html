@@ -3,12 +3,32 @@
     <title>Report</title>
     <script src="webcomponentsjs/webcomponents-lite.js"></script>
     <link rel="import" href="report/report.html">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-<teleport-report message="attribute value set in index">
-    minimalistic2
-</teleport-report>
-
+<section>
+    <header>
+        <h1>Header</h1>
+    </header>
+    <nav>
+        <ul>
+            <li>Link 1</li>
+            <li>Link 2</li>
+            <li>Link 3</li>
+            <li>Link 4</li>
+        </ul>
+    </nav>
+    <main>
+        <div>hello world</div>
+        name: <input type="text" placeholder="placeholder"/>
+        <input type="color">
+        <teleport-report message="attribute value set in index">
+            minimalistic
+        </teleport-report>
+    </main>
+    <footer>
+        Footer
+    </footer>
+</section>
 </body>
 </html>
